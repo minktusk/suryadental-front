@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/style/main-style.css">
+    <script src="https://code.jquery.com/jquery-4.0.0.js"></script>
+    <title>Dashboard</title>
+</head>
+<body>
+    <div class="main-container">
+        <h1 class="main-container-title">Dashboard</h1>
+        <div class="container">
+            <div class="sub-container">
+                <h1>Tickets Com Urgencia</h1>
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">Descrição</th>
+                            <th scope="col">Data</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!--Placeholder-->
+                        <tr>
+                            <th scope="row">Produto Com Problema</th>
+                            <td>02/07/2026</th>
+                        </tr>
+                        <tr>
+                            <th scope="row">Produto Com Problema</th>
+                            <td>02/07/2026</th>
+                        </tr>
+                        <tr>
+                            <th scope="row">Produto Com Problema</th>
+                            <td>02/07/2026</th>
+                        </tr>
+                        <tr>
+                            <th scope="row">Produto Com Problema</th>
+                            <td>02/07/2026</th>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="sub-container">
+                <h1>Clientes Com Urgencia</h1>
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">Nome</th>
+                            <th scope="col">Idade</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!--Placeholder-->
+                        <tr>
+                            <th scope="row">Marcos</th>
+                            <td>02/07/2026</th>
+                        </tr>
+                        <tr>
+                            <th scope="row">Marcos</th>
+                            <td>02/07/2026</th>
+                        </tr>
+                        <tr>
+                            <th scope="row">Marcos</th>
+                            <td>02/07/2026</th>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="navigation-bar-container">
+        <nav class="navigation-bar">
+            <a href="index.html">
+                Pagina Principal
+                <img src="assets/img/vista_collab.ico">
+            </a>
+            <hr>
+            <a href="tickets.html">
+                Tickets
+                <img src="assets/img/vista_book_2.ico">
+            </a>
+            <hr>
+            <a href="clients.html">
+                Clientes
+                <img src="assets/img/vista_cal_2.ico">
+            </a>
+            <hr>
+            <a href="import.html">
+                Importar Lista
+                <img src="assets/img/fdm1.ico">
+            </a>
+        </nav>
+    </div>
+    <div class="loading-window">
+        <div class="loading-popup">
+            <img src="assets/img/loading.gif" alt="Load Bar Gif" draggable="false">
+            <p>Carregando...</p>
+        </div>
+    </div>
+    <script>
+        const baseURL = "http://10.217.146.87:8080";
+        const baseApiRoute = "api";
+
+        const baseDashboardRoute = "dashboard";
+        const baseTicketRoute = "ticket";
+        const baseUserRoute = "user";
+
+        const xhr = new XMLHttpRequest();
+
+        xhr.addEventListener("progress", loading());
+        xhr.addEventListener("load", parseData());
+
+        function sendRequest() {
+            xhr.open("GET", baseURL + "/" + baseApiRoute + "/" + "tickets", 'Access-Control-Allow-Origin: *')
+            xhr.send();
+        }
+
+        function loading() {
+            $('loading-window').show();
+        }
+
+        function parseData() {
+            var jsonResponse = JSON.parse(xhr.response);
+
+        }
+
+        function createRow(data, tableType) {
+
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/style/main-style.css">
+    <title>Dashboard</title>
+</head>
+<body>
+    <div class="main-container-import">
+        <!--<form action="http://10.217.146.87:8080/api/import" method="post" enctype="multipart/form-data">
+            <input type="file" name="file">
+            <button type="submit">Enviar!</button>
+        </form>-->
+        <h1>Importar Lista</h1>
+        <input id="fileSelector" type="file"/>
+        <button id="submit-button">Importar</button>
+    </div>
+    <div class="navigation-bar-container">
+        <nav class="navigation-bar">
+            <a href="index.html">
+                Pagina Principal
+                <img src="assets/img/vista_collab.ico">
+            </a>
+            <hr>
+            <a href="tickets.html">
+                Tickets
+                <img src="assets/img/vista_book_2.ico">
+            </a>
+            <hr>
+            <a href="clients.html">
+                Clientes
+                <img src="assets/img/vista_cal_2.ico">
+            </a>
+            <hr>
+            <a href="import.html">
+                Importar Lista
+                <img src="assets/img/fdm1.ico">
+            </a>
+        </nav>
+    </div>
+    <script>
+        const baseURL = "http://10.217.146.87:8080";
+        const baseApiRoute = "api";
+
+        // Http Request
+
+        const xhr = new XMLHttpRequest();
+
+        xhr.addEventListener("progress", loading());
+        xhr.addEventListener("load", parseData());
+
+        //
+
+        var chosenFile;
+        const submitButton = document.getElementById("submit-button");
+
+        const fileSelector = document.getElementById("fileSelector");
+
+        fileSelector.addEventListener("input", () => {
+            chosenFile = fileSelector.files[0];
+            console.log(chosenFile);
+        });
+
+        function sendRequest() {
+
+            xhr.open("GET", baseURL + "/" + baseApiRoute + "/" + "import", 'Access-Control-Allow-Origin: *')
+            xhr.send();
+        }
+
+        function loading() {
+            
+        }
+
+        function parseData() {
+            
+        }
+    </script>
+</body>
+</html>
