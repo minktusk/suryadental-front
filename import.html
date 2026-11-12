@@ -4,17 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="assets/style/main-style.css">
+    <script src="https://code.jquery.com/jquery-4.0.0.js"></script>
+    <script src="assets/scripts/globalVar.js"></script>
     <title>Dashboard</title>
 </head>
 <body>
     <div class="main-container-import">
-        <!--<form action="http://10.217.146.87:8080/api/import" method="post" enctype="multipart/form-data">
+        <!--<form action="http://192.168.0.103:8080/api/import" method="post" enctype="multipart/form-data">
             <input type="file" name="file">
             <button type="submit">Enviar!</button>
         </form>-->
         <h1>Importar Lista</h1>
-        <input id="fileSelector" type="file"/>
-        <button id="submit-button">Importar</button>
+        <div class="import-content">
+            <input id="fileSelector" type="file"/>
+            <button id="submit-button">Importar</button>
+        </div>
     </div>
     <div class="navigation-bar-container">
         <nav class="navigation-bar">
@@ -39,41 +43,46 @@
             </a>
         </nav>
     </div>
+    <script src="assets/scripts/loading.js"></script>
+    <div class="loading-window">
+        <div class="loading-popup">
+            <img src="assets/img/loading.gif" alt="Loading Bar Gif" draggable="false">
+            <p>Carregando...</p>
+        </div>
+    </div>
     <script>
-        const baseURL = "http://10.217.146.87:8080";
         const baseApiRoute = "api";
+
+        var loadingObject = Object.create(loadingObj);
 
         // Http Request
 
         const xhr = new XMLHttpRequest();
 
-        xhr.addEventListener("progress", loading());
-        xhr.addEventListener("load", parseData());
+        xhr.addEventListener("progress", () => {
+            loadingObject.showLoading();
+        });
+        xhr.addEventListener("load", () => {
+            loadingObject.hideLoading();
+        });
 
         //
 
         var chosenFile;
         const submitButton = document.getElementById("submit-button");
-
         const fileSelector = document.getElementById("fileSelector");
 
         fileSelector.addEventListener("input", () => {
             chosenFile = fileSelector.files[0];
-            console.log(chosenFile);
         });
 
-        function sendRequest() {
+        submitButton.addEventListener("click", () => {
+            sendRequest(chosenFile);
+        })
 
-            xhr.open("GET", baseURL + "/" + baseApiRoute + "/" + "import", 'Access-Control-Allow-Origin: *')
+        function sendRequest(file) {
+            xhr.open("POST", baseURL + "/" + baseApiRoute + "/" + "import", 'Access-Control-Allow-Origin: *')
             xhr.send();
-        }
-
-        function loading() {
-            
-        }
-
-        function parseData() {
-            
         }
     </script>
 </body>

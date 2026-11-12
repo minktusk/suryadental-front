@@ -2,17 +2,17 @@
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Devanagari:wght@100;200;300;400;500;600;700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 
 body {
-    background-color: #f9f9f9;
+    background-color: #FFECD6;
 }
 
 .main-container {
     margin: 10px;
     border: 1px solid black;
-    padding: 7px;
-    border-radius: 10px;
+    padding: 35px;
+    background: #FFF2CC;
 
     > h1 {
-        color: #474747;
+        color: #000000;
         font-family: "Roboto", sans-serif;
         border-bottom: 1px solid black;
         padding-bottom: 13px;
@@ -31,6 +31,7 @@ body {
     display: grid;
     grid-auto-flow: column;
     justify-items: center;
+    grid-template-columns: 50%;
 }
 
 .sub-container {
@@ -39,6 +40,7 @@ body {
     padding: 20px;
     border-radius: 10px;
     width: 70%;
+    background-color: #FDECD7;
 
     > h1 {
         color: #474747;
@@ -49,16 +51,42 @@ body {
 }
 
 .main-container-import {
+    padding: 35px;
+    display: grid;
+    grid-auto-flow: row;
     margin: 10px;
     border: 1px solid black;
-    padding: 7px;
     border-radius: 10px;
+    background: #FFF2CC;
 
     > h1 {
-        color: #474747;
-        font-family: "Roboto", sans-serif;
+        color: black;
+        font-family: "MS PGothic", Tahoma, Verdana;
         border-bottom: 1px solid black;
         padding-bottom: 13px;
+    }
+
+    > .import-content {
+        display: grid;
+        justify-content: center;
+        border: 1px black solid;
+        width: 54%;
+        padding: 33px;
+        grid-gap: 20px;
+        justify-self: center;
+        height: 201px;
+        margin: 23px;
+        align-items: center;
+        
+        > input {
+            align-self: center;
+        }
+
+        > button {
+            width: 80%;
+            height: 35%;
+            border-radius: 9px;
+        }
     }
 }
 
@@ -77,7 +105,7 @@ body {
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     border-bottom: 0px;
-    background-color: white;
+    background-color: #fadabe;
 
     > hr {
         color: #dfdfdf;
@@ -114,10 +142,10 @@ table {
     width: 100%;
     
     > thead {
-        font-family: "Roboto", sans-serif;
+        font-family: "MS PGothic", Tahoma;
         
         > tr {
-            background-color: #e1e1e1;;
+            background-color: #FFC09B;
             
             > th {
                 padding: 1px;
@@ -129,7 +157,7 @@ table {
         font-family: "IBM Plex Sans Devanagari", sans-serif;
         
         > tr {
-            background-color: white;
+            background-color: #fff2df;
             
             > th {
                 padding: 10px;
@@ -149,7 +177,7 @@ table {
     left: 0;
     right: 0;
     bottom: 0;
-    display: flex;
+    display: none;
     align-items: center;
     justify-content: center;
 

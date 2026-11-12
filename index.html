@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="assets/style/main-style.css">
     <script src="https://code.jquery.com/jquery-4.0.0.js"></script>
+    <script src="assets/scripts/globalVar.js"></script>
+    <link rel="shortcut icon" href="assets/img/favicon.ico" type="image/x-icon">
     <title>Dashboard</title>
 </head>
 <body>
@@ -13,7 +15,7 @@
         <div class="container">
             <div class="sub-container">
                 <h1>Tickets Com Urgencia</h1>
-                <table>
+                <table id="table-tickets">
                     <thead>
                         <tr>
                             <th scope="col">Descrição</th>
@@ -43,7 +45,7 @@
             </div>
             <div class="sub-container">
                 <h1>Clientes Com Urgencia</h1>
-                <table>
+                <table id="table-clients">
                     <thead>
                         <tr>
                             <th scope="col">Nome</th>
@@ -94,40 +96,96 @@
     </div>
     <div class="loading-window">
         <div class="loading-popup">
-            <img src="assets/img/loading.gif" alt="Load Bar Gif" draggable="false">
+            <img src="assets/img/loading.gif" alt="Loading Bar Gif" draggable="false">
             <p>Carregando...</p>
         </div>
     </div>
+    <script src="assets/scripts/loading.js"></script>
     <script>
-        const baseURL = "http://10.217.146.87:8080";
+
+        var loadingObject = Object.create(loadingObj);
+
+        // Http Client Settings
+        
         const baseApiRoute = "api";
 
         const baseDashboardRoute = "dashboard";
-        const baseTicketRoute = "ticket";
-        const baseUserRoute = "user";
+        const baseTicketRoute = "tickets";
+        const baseUserRoute = "clients";
 
         const xhr = new XMLHttpRequest();
 
-        xhr.addEventListener("progress", loading());
-        xhr.addEventListener("load", parseData());
+        xhr.addEventListener("progress", () => {
+            loadingObject.showLoading();
+        });
 
-        function sendRequest() {
-            xhr.open("GET", baseURL + "/" + baseApiRoute + "/" + "tickets", 'Access-Control-Allow-Origin: *')
+        //
+
+        function sendRequest(api) {
+            xhr.open("GET", baseURL + "/" + baseApiRoute + "/" + api + "?page=1&size=5", 'Access-Control-Allow-Origin: *')
             xhr.send();
         }
 
-        function loading() {
-            $('loading-window').show();
-        }
-
         function parseData() {
-            var jsonResponse = JSON.parse(xhr.response);
-
+            return JSON.parse(xhr.response)["content"];
         }
 
         function createRow(data, tableType) {
+            var elementTableHtml = document.getElementById(getTableName(tableType));
+            var elemtnTbodyJQ = $(elementTableHtml.getElementsByTagName("tbody"));
 
+            elemtnTbodyJQ.empty();
+
+            data.forEach(element => {
+                var trbody = $("<tr>");
+                trbody.append("<th scope='row'>" + element["subject"] + "</th>");
+                trbody.append("<td>" + element["openedAt"] + "</td>");
+
+                trbody.appendTo(elemtnTbodyJQ);
+            });
+
+            loadingObject.hideLoading();
         }
+
+        function getContent(params) {
+            
+        }
+
+        function getTableName(params) {
+            switch (params) {
+                case baseDashboardRoute:
+                    return "table-dashboard";
+
+                case baseTicketRoute:
+                    return "table-tickets";
+
+                case baseUserRoute:
+                    return "table-clients";
+            
+                default:
+                    console.log("Invalid Input!");
+                    break;
+            }
+        }
+
+        function getInfo(infoType) {
+            return new Promise(() => {
+                xhr.addEventListener("load", () => {
+                createRow(parseData(), infoType);
+            });
+            sendRequest(infoType);
+            })
+            /*xhr.addEventListener("load", () => {
+                createRow(parseData(), infoType);
+            });
+            sendRequest(infoType);*/
+        }
+
+        $(this).ready(async () => {
+            console.log("Hello!");
+            await getInfo(baseTicketRoute);
+            await getInfo(baseUserRoute);
+        })
     </script>
 </body>
 </html>
